@@ -1,0 +1,26 @@
+<h1> <%= @question.title %> </h1> <small> <%= @question.tags %> </small>
+
+<h3><%= @question.body %> </h3>
+<% if user_signed_in? %>
+<%= link_to "Edit", edit_user_question_path(@question.user_id, @question) %>
+<%= link_to "Delete", user_question_path(@question), method: :delete, data: {confirm: 'Are you sure?'} %>
+<% end %>
+
+<% @question.answers.each do |answer| %>
+  <p><%= answer.body %></p>
+  <p><%= answer.get_likes.size %></p> score
+  <%= link_to "upvote", :upvote => answer.id %>
+  <%= link_to "downvote", :downvote => answer.id %>
+  <% if user_signed_in? %>
+    <%= link_to "Edit Answer", edit_question_answer_path(@question,answer) %>
+    <%= link_to "Delete Answer", question_answer_path(@question,answer), method: :delete, data: {confirm: 'Are you sure?'} %>
+  <% end %>
+<% end %>
+
+<% if user_signed_in? %>
+  <%= render "answers/form" %>
+  <% else %>
+  Log in to post an answer
+  <%= link_to "Log In", new_user_session_path %>
+
+<% end %>

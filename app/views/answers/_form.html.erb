@@ -1,0 +1,7 @@
+<%= render "layouts/errors", :object => @answer %>
+
+<%= form_for [@question,@answer] do |f| %>
+<%= f.hidden_field :user_id, :value => @question.user_id %>
+  <%= f.text_field :body %>
+  <%= f.submit %>
+<% end %>
